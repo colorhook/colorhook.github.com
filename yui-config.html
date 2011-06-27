@@ -1,0 +1,383 @@
+<!DOCTYPE html> 
+<!--
+  Copyright 2011 Google Inc.
+ 
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+ 
+     http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ 
+  Original slides: Marcin Wichary (mwichary@google.com)
+  Modifications: Chrome DevRel Team (chrome-devrel@googlegroups.com)
+                 Alex Russell (slightlyoff@chromium.org)
+                 Brad Neuberg
+--> 
+<html> 
+<head> 
+    <meta charset='utf-8'> 
+    <meta http-equiv="X-UA-Compatible" content="chrome=1"> 
+    <title>HTML5演示模板</title> 
+	<link href="main.css" class="theme" rel="stylesheet" /> 
+
+  </head>
+  <body class="three-d">
+    <div class="presentation">
+	  <!--slides start -->
+      <div class="slides"> 
+        <div class="slide" id="landing-slide">
+			<section class="middle">
+				<p style='font-size:84px;margin-bottom:0;'>YUI模块配置</p>
+				<p style='font-size:20px;padding-left:460px;'>口碑网F2E 正邪 - 2011.06.26</p>
+			</section>
+		</div>
+		<div class="slide">
+          <header><h1>模块配置信息</h1></header>
+          <section>
+<pre>
+YUI({modules:{
+		'custom-module-name':{
+			type: 'js',
+			path: 'custom-module-name.js',
+			fullpath:'custom-module-name.js',
+			requires:[],
+			optional:[],
+			supersedes:[],
+			rollup: 4,
+			submodules:{
+			},
+			plugins:{
+			},
+			after:[],
+			lang:[]
+			condition: {
+				test: function(){
+					return true;
+				},
+				'trigger':'xxx',
+				'when': 'before' & 'after' & 'instead'
+			},
+			
+		}
+	},
+	loadOptional: false
+
+}).use('custom-module-name', function(Y){});
+
+</pre>
+          </section>
+		 <span class="counter">1</span>
+	   </div>
+	   <div class="slide">
+          <header><h1>requires选项</h1></header>
+          <section>
+<pre>
+YUI({
+	modules:{
+		'mod-a':{
+			fullpath:'mod-a.js',
+			requires:['mod-b']
+		},
+		'mod-b':{
+			fullpath:'mod-b.js'
+		}
+	}
+}).use('mod-a', function(Y){
+
+	//mod-b loaded
+	//mod-a loaded
+
+});
+</pre>
+          </section>
+		  <span class="counter">2</span>
+	   </div>
+<div class="slide">
+         <header><h1>optional选项</h1></header>
+          <section>
+<pre>
+YUI({
+	modules:{
+		'mod-a':{
+			fullpath:'mod-a.js',
+			optional: ['mod-b']
+		},
+		'mod-b':{
+			fullpath:'mod-b.js'
+		}
+	},
+	loadOptional: true
+
+}).use('mod-a',  function(Y){
+
+	//mod-b loaded
+	//mod-a loaded
+
+});
+
+</pre>
+          </section>
+		  <span class="counter">3</span>
+</div>
+<div class="slide">
+         <header><h1>supersedes选项</h1></header>
+          <section>
+<pre>
+YUI({modules:{
+	'mod-a':{
+		fullpath:'mod-a.js',
+		requires:['jsonp'],
+		supersedes: ['jsonp']
+	},
+	'mod-b':{
+		fullpath:'mod-b.js'
+	}
+}}).use( 'mod-a', 'mod-b', function(Y){
+	Y.log(Y.jsonp); //undefined 
+
+	YUI().use('jsonp', function(Y){
+		Y.log(Y.jsonp); //undefined 
+	});
+
+	YUI({force: ['jsonp']}).use('jsonp', function(Y){
+		Y.log(Y.jsonp); //undefined 
+	});
+});
+
+YUI().use('jsonp', function(Y){
+	Y.log(Y.jsonp); //undefined 
+});
+YUI({force: ['jsonp']}).use('jsonp', function(Y){
+	Y.log(Y.jsonp); //function(){} 
+});
+
+</pre>
+          </section>
+		  <span class="counter">4</span>
+</div>
+
+
+ <div class="slide">
+         <header><h1>submodules选项</h1></header>
+          <section>
+<pre>
+YUI({
+	modules:{
+		'mod-a':{
+			fullpath:'mod-a.js',
+			submodules:{
+				'mod-a-sub1':{
+					fullpath: 'mod-a-sub1.js'
+				},
+				'mod-a-sub2':{
+					fullpath: 'mod-a-sub2.js'
+				}
+			}
+		}
+	}
+
+}).use('mod-a-sub1',  function(Y){
+	
+	//mod-a-sub1 loaded
+
+});
+
+</pre>
+          </section>
+		  <span class="counter">5</span>
+</div>
+
+<div class="slide">
+         <header><h1>plugins选项</h1></header>
+          <section>
+<pre>
+YUI({
+	modules:{
+		'mod-a':{
+			fullpath:'mod-a.js',
+			plugins:{
+				'mod-a-plugin1':{
+					fullpath: 'mod-a-plugin1.js'
+				},
+				'mod-a-plugin2':{
+					fullpath: 'mod-a-plugin2.js'
+				}
+			}
+		}
+	}
+
+}).use('mod-a-plugin1',  function(Y){
+	
+	//mod-a-plugin1 loaded
+
+});
+
+</pre>
+          </section>
+		  <span class="counter">6</span>
+</div>
+
+ <div class="slide">
+         <header><h1>先use先加载</h1></header>
+          <section>
+<pre>
+YUI({
+	modules:{
+		'mod-a':{
+			fullpath:'mod-a.js'
+		},
+		'mod-b':{
+			fullpath:'mod-b.js'
+		}
+	}
+
+}).use('mod-a', 'mod-b', function(Y){
+
+	//mod-a loaded
+	//mod-b loaded
+
+});
+
+</pre>
+          </section>
+		  <span class="counter">7</span>
+</div>
+
+<div class="slide">
+         <header><h1>after选项</h1></header>
+          <section>
+<pre>
+YUI({
+	modules:{
+		'mod-a':{
+			fullpath:'mod-a.js',
+			after:['mod-a']
+		},
+		'mod-b':{
+			fullpath:'mod-b.js'
+		},
+	}
+
+}).use('mod-a', 'mod-b',  function(Y){
+	
+	//mod-b loaded
+	//mod-a loaded
+
+});
+
+</pre>
+          </section>
+		  <span class="counter">8</span>
+</div>
+
+<div class="slide">
+         <header><h1>skinnable选项</h1></header>
+          <section>
+<pre>skin: { defaultSkin: 'sam',
+       base: 'assets/skins/',
+       path: 'skin.css',
+       after: ['cssreset',
+                  'cssfonts',
+                  'cssgrids',
+                  'cssbase',
+                  'cssreset-context',
+                  'cssfonts-context']},</pre>
+<pre>YUI({modules:{
+		'mod-a':{
+			fullpath:'mod-a.js',
+			skinnable: true
+		}
+	}
+
+}).use('mod-a', function(Y){
+	
+	//mod-a loaded
+	// 自动从BASE+mod-a/assets/skins/sam/mod-a.css加载CSS
+
+});
+
+</pre>
+          </section>
+		  <span class="counter">9</span>
+</div>
+
+<div class="slide">
+         <header><h1>lang选项</h1></header>
+          <section>
+<pre>
+YUI({
+	lang: 'ko-KR,en-GB,zh-Hant-TW',
+	modules:{
+		'mod-a':{
+			fullpath:'mod-a.js',
+			 "lang": [
+					"en-GB"
+                ],
+		}
+	}
+
+}).use('mod-a', function(Y){
+	
+	//mod-a loaded
+	//自动从BASE+mod-a/lang/mod-a_en-GB.js加载js
+});
+
+</pre>
+          </section>
+		  <span class="counter">10</span>
+</div>
+
+<div class="slide">
+         <header><h1>condition选项</h1></header>
+          <section>
+<pre>
+YUI({
+	modules:{
+		'mod-a':{
+			fullpath:'mod-a.js',
+			condition:{
+				test: function(){
+					return true;
+				},
+				'trigger': 'mod-b',
+				'when': 'instead'
+				//'when': 'before' //mod-a + mod-b
+				//'when': 'after' //mod-b + mod-a 默认选项
+			}
+		},
+		'mod-b':{
+			fullpath:'mod-b.js'
+		},
+	}
+
+}).use('mod-b',  function(Y){
+	
+	//mod-a loaded
+
+});
+
+</pre>
+          </section>
+		  <span class="counter">11</span>
+</div>
+
+<div class="slide">
+  <header><h1>Q&A</h1></header>
+  <section class="middle">
+	<p style='font-size:84px;'>Thank You!</p>
+  </section>
+  <span class="counter">12</span>
+</div>
+
+</div>
+	 <!--slides end -->
+	 <script src="slider.js"></script>
+
+	</body>
+</html>
