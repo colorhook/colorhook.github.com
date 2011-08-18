@@ -38,18 +38,11 @@
 				<p style='font-size:24px;padding-left:420px;'>口碑网F2E 正邪 - 2011.08.20</p>
 			</section>
 		</div>
-		<div class="slide">
+		<div class="slide"  style="background:url(basic-3d/inception.jpg)">
           <header><h1 style="color:#ff0000;font-weight:bold;">3D<span style='color:#a11111;font-weight:normal;'>imension</span></h1></header>
           <section class="middle">
-			<img src="basic-3d/3d-coord.gif" width=500 height=500/>
           </section>
 		 <span class="counter">1</span>
-	   </div>
-	   <div class="slide">
-          <header><h1>人眼的感知</h1></header>
-          <section>
-          </section>
-		  <span class="counter">2</span>
 	   </div>
 	   <div class="slide">
           <header><h1>3D到2D的转换</h1></header>
@@ -59,12 +52,17 @@
 		  <span class="counter">3</span>
 	   </div>
 	   <div class="slide">
-          <header><h1>点、线、面</h1></header>
+          <header><h1>一个小例子</h1></header>
           <section>
+			<div style="position:relative;height:600px;left:400px;top:200px;">
+				<img id="slide5_img1" style="position:absolute;width:200px;height:150px;"  src="basic-3d/3d.jpg"/>
+				<img id="slide5_img2" style="position:absolute;width:200px;heigt:150px;" src="basic-3d/3d.jpg">
+				<img id="slide5_img3" style="position:absolute;width:200px;height:150px;" src="basic-3d/3d.jpg">
+			</div>
           </section>
 		  <span class="counter">4</span>
 	   </div>
-	   <div class="slide">
+	    <div class="slide">
           <header><h1>3D几何体</h1></header>
           <section>
 			<div style="position:relative;height:600px;left:400px;top:200px;">
@@ -75,29 +73,34 @@
           </section>
 		  <span class="counter">4</span>
 	   </div>
+	    <div class="slide">
+          <header><h1>点、线、面</h1></header>
+          <section>
+          </section>
+		  <span class="counter">4</span>
+	   </div>
+	   <div class="slide">
+          <header><h1>旋转立方体</h1></header>
+          <section>
+			<div id="slide_10_container"></div>
+			<div style="position:relative;left:600px;top:-200px;">
+				<input style="width:200px" type="range" id="slide_10_slider" value="300" min="100" max="600">
+				<p>透视因子：<span id="slide_10_slider_span">300</span></p>
+			</div>
+          </section>
+		  <span class="counter">10</span>
+	   </div>
 	   <div class="slide">
           <header><h1>材质</h1></header>
           <section>
           </section>
 		  <span class="counter">5</span>
 	   </div>
-	   <div class="slide">
-          <header><h1>3D场景</h1></header>
-          <section>
-          </section>
-		  <span class="counter">6</span>
-	   </div>
 	    <div class="slide">
           <header><h1>3D摄像机</h1></header>
           <section>
           </section>
 		  <span class="counter">7</span>
-	   </div>
-	   <div class="slide">
-          <header><h1>渲染</h1></header>
-          <section>
-          </section>
-		  <span class="counter">8</span>
 	   </div>
 	   <div class="slide">
           <header><h1>灯光</h1></header>
@@ -140,17 +143,6 @@
 					<dd></dd>
 				</dl>
 			</section>
-	   </div>
-	   <div class="slide">
-          <header><h1>旋转立方体</h1></header>
-          <section>
-			<div id="slide_10_container"></div>
-			<div style="position:relative;left:600px;top:-200px;">
-				<input style="width:200px" type="range" id="slide_10_slider" value="300" min="100" max="600">
-				<p>透视因子：<span id="slide_10_slider_span">300</span></p>
-			</div>
-          </section>
-		  <span class="counter">10</span>
 	   </div>
 	   <div class="slide">
           <header><h1>旋转立方体</h1></header>
