@@ -1,0 +1,193 @@
+<!DOCTYPE html> 
+<!--
+  Copyright 2011 Google Inc.
+ 
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+ 
+     http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ 
+  Original slides: Marcin Wichary (mwichary@google.com)
+  Modifications: Chrome DevRel Team (chrome-devrel@googlegroups.com)
+                 Alex Russell (slightlyoff@chromium.org)
+                 Brad Neuberg
+--> 
+<html> 
+<head> 
+    <meta charset='utf-8'> 
+    <meta http-equiv="X-UA-Compatible" content="chrome=1"> 
+    <title>Web 3D应用的基本原理</title> 
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+	<link href="lib/main.css" class="theme" rel="stylesheet" /> 
+
+  </head>
+  <body class="three-d">
+    <div class="presentation">
+	  <!--slides start -->
+      <div class="slides"> 
+        <div class="slide" id="landing-slide">
+			<section class="middle">
+				<p style='font-size:64px;margin-bottom:0;'>Web 3D应用的基本原理</p>
+				<p style='font-size:24px;padding-left:420px;'>口碑网F2E 正邪 - 2011.08.20</p>
+			</section>
+		</div>
+		<div class="slide">
+          <header><h1 style="color:#ff0000;font-weight:bold;">3D<span style='color:#a11111;font-weight:normal;'>imension</span></h1></header>
+          <section class="middle">
+			<img src="basic-3d/3d-coord.gif" width=500 height=500/>
+          </section>
+		 <span class="counter">1</span>
+	   </div>
+	   <div class="slide">
+          <header><h1>人眼的感知</h1></header>
+          <section>
+          </section>
+		  <span class="counter">2</span>
+	   </div>
+	   <div class="slide">
+          <header><h1>3D到2D的转换</h1></header>
+          <section class="middle">
+			<img src="basic-3d/3d-2d.png" width="600" height="400"/>
+          </section>
+		  <span class="counter">3</span>
+	   </div>
+	   <div class="slide">
+          <header><h1>点、线、面</h1></header>
+          <section>
+          </section>
+		  <span class="counter">4</span>
+	   </div>
+	   <div class="slide">
+          <header><h1>3D几何体</h1></header>
+          <section>
+			<div style="position:relative;height:600px;left:400px;top:200px;">
+				<img id="slide5_img1" style="position:absolute;width:200px;height:150px;"  src="basic-3d/3d.jpg"/>
+				<img id="slide5_img2" style="position:absolute;width:200px;heigt:150px;" src="basic-3d/3d.jpg">
+				<img id="slide5_img3" style="position:absolute;width:200px;height:150px;" src="basic-3d/3d.jpg">
+			</div>
+          </section>
+		  <span class="counter">4</span>
+	   </div>
+	   <div class="slide">
+          <header><h1>材质</h1></header>
+          <section>
+          </section>
+		  <span class="counter">5</span>
+	   </div>
+	   <div class="slide">
+          <header><h1>3D场景</h1></header>
+          <section>
+          </section>
+		  <span class="counter">6</span>
+	   </div>
+	    <div class="slide">
+          <header><h1>3D摄像机</h1></header>
+          <section>
+          </section>
+		  <span class="counter">7</span>
+	   </div>
+	   <div class="slide">
+          <header><h1>渲染</h1></header>
+          <section>
+          </section>
+		  <span class="counter">8</span>
+	   </div>
+	   <div class="slide">
+          <header><h1>灯光</h1></header>
+          <section>
+			<dl>
+				<dt>点光源</dt>
+				<dd></dd>
+				<dt>平行光</dt>
+				<dd></dd>
+				<dt>聚光灯</dt>
+				<dd></dd>
+				<dt>环境光</dt>
+				<dd></dd>
+			</ol>
+          </section>
+		  <span class="counter">9</span>
+	   </div>
+	   <div class="slide">
+			<header><h1>着色</h1></header>
+			<section>
+				<dl>
+					<dt>flat</dt>
+					<dd></dd>
+					<dt>Gourand</dt>
+					<dd></dd>
+					<dt>phong</dt>
+					<dd></dd>
+				</dl>
+			</section>
+	   </div>
+	   <div class="slide">
+			<header><h1>消隐</h1></header>
+			<section>
+				<dl>
+					<dt>背面剔除</dt>
+					<dd></dd>
+					<dt>视域消隐</dt>
+					<dd></dd>
+					<dt>遮挡剔除</dt>
+					<dd></dd>
+				</dl>
+			</section>
+	   </div>
+	   <div class="slide">
+          <header><h1>旋转立方体</h1></header>
+          <section>
+			<div id="slide_10_container"></div>
+			<div style="position:relative;left:600px;top:-200px;">
+				<input style="width:200px" type="range" id="slide_10_slider" value="300" min="100" max="600">
+				<p>透视因子：<span id="slide_10_slider_span">300</span></p>
+			</div>
+          </section>
+		  <span class="counter">10</span>
+	   </div>
+	   <div class="slide">
+          <header><h1>旋转立方体</h1></header>
+          <section>
+			<div id="slide_11_container"></div>
+          </section>
+		  <span class="counter">11</span>
+	   </div>
+	   <div class="slide">
+          <header><h1>网格扭曲特效</h1></header>
+          <section>
+			<div id="slide_12_container"></div>
+          </section>
+		  <span class="counter">12</span>
+	   </div>
+	    <div class="slide">
+          <header><h1>网格扭曲特效</h1></header>
+          <section>
+			<div id="slide_13_container"></div>
+          </section>
+		  <span class="counter">13</span>
+	   </div>
+	   <div class="slide">
+          <header><h1>Q&A</h1></header>
+          <section class="middle">
+			<p style='font-size:60px;'>Thank You!</p>
+          </section>
+		  <span class="counter">13</span>
+	   </div>
+	 </div>
+	 <!--slides end -->
+<script src="lib/Three.js"></script> 
+<script src="lib/Tween.js"></script> 
+<script src="lib/RequestAnimationFrame.js"></script>
+<script src='lib/raphael-min.js'></script>
+<script src='lib/vector3d.js'></script>
+<script src='basic-3d/app.js'></script>
+<script src="lib/slider.js"></script>
+</body>
+</html>

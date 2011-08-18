@@ -1,5 +1,5 @@
 ﻿body {
-	font: 14px "Century Gothic", Verdana, sans-serif;
+	font: 14px 'Droid Sans', 'Microsoft Yahei', "Century Gothic", Verdana, sans-serif;
 	background: #778;
 	padding: 0;
 	margin: 0;
@@ -146,7 +146,7 @@ header {
   font-weight: normal;
   letter-spacing: -.05em;
   color: black;
-  text-shadow: rgba(0, 0, 0, 0.2) 0 2px 5px;
+  text-shadow: rgba(0, 0, 0, 0.5) 1px 1px 1px;
   position: absolute;
   left: 30px;
   top: 25px;
