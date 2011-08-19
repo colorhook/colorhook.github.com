@@ -16,7 +16,8 @@
 }
 
 body.three-d div.slides {
-	-webkit-transform: translateX(50px) scale(0.8) rotateY(10deg);        
+	/*-webkit-transform: translateX(50px) scale(0.8) rotateY(10deg); */     
+	zoom:0.8;
 	-moz-transform: translateX(50px) scale(0.8) rotateY(10deg);
 	-o-transform: translateX(50px) scale(0.8) rotateY(10deg);
 }

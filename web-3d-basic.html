@@ -26,13 +26,25 @@
     <title>Web 3D应用的基本原理</title> 
 	<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
 	<link href="lib/main.css" class="theme" rel="stylesheet" /> 
-
+	<style>
+	html .slide .counter{
+		font-size:18px;
+		text-align:center;
+		line-height:28px;
+		display:inline-block;
+		width:28px;
+		height:28px;
+		background:#fff;
+		border-radius:16px;
+	}
+	</style>
   </head>
   <body class="three-d">
     <div class="presentation">
 	  <!--slides start -->
       <div class="slides"> 
-        <div class="slide" id="landing-slide">
+        <div class="slide" id="landing-slide" style="postion:relative;">
+			<div id="slide_welcome_container" style="position:absolute;top:-100px;"></div>
 			<section class="middle">
 				<p style='font-size:64px;margin-bottom:0;'>Web 3D应用的基本原理</p>
 				<p style='font-size:24px;padding-left:420px;'>口碑网F2E 正邪 - 2011.08.20</p>
@@ -44,97 +56,156 @@
           </section>
 		 <span class="counter">1</span>
 	   </div>
+	   <div class="slide" style="background:#fff">
+          <header><h1>一点透视</h1></header>
+          <section class="middle">
+			<div class="pers-1"></div>
+          </section>
+		  <style>
+			div.pers-1{
+				width:433px;
+				height:326px;
+				display:inline-block;
+				background:url(basic-3d/cuboid_1b.jpg);
+			}
+			div.pers-1:hover{
+				background:url(basic-3d/cuboid_1a.gif);
+			}
+			</style>
+		  <span class="counter">2</span>
+	   </div>
+	   <div class="slide" style="background:#fff">
+          <header><h1>两点透视</h1></header>
+          <section class="middle">
+			<div class="pers-2"></div>
+          </section>
+		  <style>
+			div.pers-2{
+				width:433px;
+				height:326px;
+				display:inline-block;
+				background:url(basic-3d/cuboid_2b.jpg);
+			}
+			div.pers-2:hover{
+				background:url(basic-3d/cuboid_2a.gif);
+			}
+			</style>
+		  <span class="counter">3</span>
+	   </div>
+	   <div class="slide" style="background:#fff">
+          <header><h1>三点透视</h1></header>
+          <section class="middle">
+			<div class="pers-3"></div>
+          </section>
+		  <style>
+			div.pers-3{
+				width:433px;
+				height:326px;
+				display:inline-block;
+				background:url(basic-3d/cuboid_3b.jpg);
+			}
+			div.pers-3:hover{
+				background:url(basic-3d/cuboid_3a.gif);
+			}
+			</style>
+		  <span class="counter">4</span>
+	   </div>
+	   <div class="slide" style="background:#fff">
+          <header><h1>人眼的感知</h1></header>
+          <section class="middle">
+			<img style="position:relative;top:50px;" src="basic-3d/viewport.jpg"/>
+          </section>
+		  <span class="counter">5</span>
+	   </div>
 	   <div class="slide">
           <header><h1>3D到2D的转换</h1></header>
           <section class="middle">
 			<img src="basic-3d/3d-2d.png" width="600" height="400"/>
-          </section>
-		  <span class="counter">3</span>
-	   </div>
-	   <div class="slide">
-          <header><h1>一个小例子</h1></header>
-          <section>
-			<div style="position:relative;height:600px;left:400px;top:200px;">
-				<img id="slide5_img1" style="position:absolute;width:200px;height:150px;"  src="basic-3d/3d.jpg"/>
-				<img id="slide5_img2" style="position:absolute;width:200px;heigt:150px;" src="basic-3d/3d.jpg">
-				<img id="slide5_img3" style="position:absolute;width:200px;height:150px;" src="basic-3d/3d.jpg">
+			<div style="font-size:32px;text-align:left;line-height:38px;padding-left:100px;">
+				<span style="color:#a11111;">perspective = viewDistance / (z + viewDistance);</span><br/>
+				<span>x = x * perspective;</span><br/>
+				<span>y = y * perspctive;</span><br/>
+				<span>z = 0;</span>
 			</div>
           </section>
-		  <span class="counter">4</span>
+		  <span class="counter">6</span>
 	   </div>
-	    <div class="slide">
-          <header><h1>3D几何体</h1></header>
+		<div class="slide">
+          <header><h1>透视</h1></header>
           <section>
-			<div style="position:relative;height:600px;left:400px;top:200px;">
-				<img id="slide5_img1" style="position:absolute;width:200px;height:150px;"  src="basic-3d/3d.jpg"/>
-				<img id="slide5_img2" style="position:absolute;width:200px;heigt:150px;" src="basic-3d/3d.jpg">
-				<img id="slide5_img3" style="position:absolute;width:200px;height:150px;" src="basic-3d/3d.jpg">
-			</div>
-          </section>
-		  <span class="counter">4</span>
-	   </div>
-	    <div class="slide">
-          <header><h1>点、线、面</h1></header>
-          <section>
-          </section>
-		  <span class="counter">4</span>
-	   </div>
-	   <div class="slide">
-          <header><h1>旋转立方体</h1></header>
-          <section>
-			<div id="slide_10_container"></div>
+			<div id="slide_r_container"></div>
 			<div style="position:relative;left:600px;top:-200px;">
-				<input style="width:200px" type="range" id="slide_10_slider" value="300" min="100" max="600">
-				<p>透视因子：<span id="slide_10_slider_span">300</span></p>
+				<input style="width:200px" type="range" id="slide_r_slider" value="300" min="100" max="600">
+				<p>透视因子：<span id="slide_r_slider_span">300</span></p>
 			</div>
           </section>
-		  <span class="counter">10</span>
+		  <span class="counter">7</span>
+	   </div>
+	   <div class="slide">
+          <header><h1>3个img标签组成的一个小例子</h1></header>
+         <section>
+			<div style="position:relative;height:600px;left:400px;top:200px;">
+				<img id="slide5_img1" class="slide5_img" src="basic-3d/3d.jpg"></img>
+				<img id="slide5_img2" class="slide5_img" src="basic-3d/3d.jpg">
+				<img id="slide5_img3" class="slide5_img" src="basic-3d/3d.jpg">
+				<style>
+				.slide5_img{
+					position:absolute;width:200px;heigt:150px;
+					-webkit-box-reflect:below 4px -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0.78, rgba(0, 0, 0, 0)), color-stop(0.68, rgba(0, 0, 0, 0)), to(rgb(255, 255, 255)), to(rgb(255, 255, 255))) 0 0 0 0 stretch stretch;
+				}
+				</style>
+			</div>
+          </section>
+		  <span class="counter">8</span>
+	   </div>
+	   <div class="slide" style="background:#fff">
+          <header><h1>3D场景</h1></header>
+          <section class="middle">
+			<img src="basic-3d/scene.jpg"/>
+          </section>
+		  <span class="counter">9</span>
 	   </div>
 	   <div class="slide">
           <header><h1>材质</h1></header>
           <section>
+			<p>context.drawImage(image, x, y, width, height);</p>
+			<p>context.transform(m11, m12, m21, m22, dx, dy);</p>
+			<canvas id="canvas_skew" width="800" height="400"></canvas>
           </section>
-		  <span class="counter">5</span>
-	   </div>
-	    <div class="slide">
-          <header><h1>3D摄像机</h1></header>
-          <section>
-          </section>
-		  <span class="counter">7</span>
+		  <span class="counter">10</span>
 	   </div>
 	   <div class="slide">
           <header><h1>灯光</h1></header>
           <section>
 			<dl>
 				<dt>点光源</dt>
-				<dd></dd>
+				<dd>电灯泡 THREE.PointLight</dd>
 				<dt>平行光</dt>
-				<dd></dd>
+				<dd>太阳光 THREE.DirectionalLight</dd>
 				<dt>聚光灯</dt>
-				<dd></dd>
+				<dd>手电筒 THREE.SpotLight</dd>
 				<dt>环境光</dt>
-				<dd></dd>
+				<dd>自然光 THREE.AmbientLight</dd>
 			</ol>
+			<style>
+			dd{
+				font-size:30px;
+				margin:8px 0 20px 60px;
+			}
+			</style>
           </section>
-		  <span class="counter">9</span>
+		  <span class="counter">11</span>
 	   </div>
-	   <div class="slide">
-			<header><h1>着色</h1></header>
+	   <div class="slide" style="background:url(basic-3d/shade.jpg)">
+			<header><h1></h1></header>
 			<section>
-				<dl>
-					<dt>flat</dt>
-					<dd></dd>
-					<dt>Gourand</dt>
-					<dd></dd>
-					<dt>phong</dt>
-					<dd></dd>
-				</dl>
 			</section>
+			<span class="counter">12</span>
 	   </div>
 	   <div class="slide">
 			<header><h1>消隐</h1></header>
 			<section>
-				<dl>
+				<dl style='line-height:80px'>
 					<dt>背面剔除</dt>
 					<dd></dd>
 					<dt>视域消隐</dt>
@@ -142,35 +213,39 @@
 					<dt>遮挡剔除</dt>
 					<dd></dd>
 				</dl>
+				<div style='position:relative;left:300px;top:-300px;'>
+					<img src="basic-3d/view-frustum.jpg"/>
+				</div>
 			</section>
+			<span class="counter">13</span>
+	   </div>
+	    <div class="slide" style="background:#112233">
+          <header><h1 style="color:#fff">一个例子</h1></header>
+          <section>
+			<div id="slide_3d_container"></div>
+          </section>
+		  <span class="counter">14</span>
 	   </div>
 	   <div class="slide">
-          <header><h1>旋转立方体</h1></header>
+          <header><h1>扭曲特效</h1></header>
           <section>
-			<div id="slide_11_container"></div>
+			<div id="slide_mesh_container"></div>
           </section>
-		  <span class="counter">11</span>
-	   </div>
-	   <div class="slide">
-          <header><h1>网格扭曲特效</h1></header>
-          <section>
-			<div id="slide_12_container"></div>
-          </section>
-		  <span class="counter">12</span>
+		  <span class="counter">15</span>
 	   </div>
 	    <div class="slide">
-          <header><h1>网格扭曲特效</h1></header>
+          <header><h1>扭曲特效</h1></header>
           <section>
-			<div id="slide_13_container"></div>
+			<div id="slide_mesh2_container"></div>
           </section>
-		  <span class="counter">13</span>
+		  <span class="counter">16</span>
 	   </div>
 	   <div class="slide">
           <header><h1>Q&A</h1></header>
           <section class="middle">
 			<p style='font-size:60px;'>Thank You!</p>
           </section>
-		  <span class="counter">13</span>
+		  <span class="counter">17</span>
 	   </div>
 	 </div>
 	 <!--slides end -->

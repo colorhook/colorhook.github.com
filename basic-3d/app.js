@@ -22,6 +22,50 @@ var App = {
 window.onSlideChange = function(i){
 	App.onSlideChange(i);
 };
+//slide 13
+App.register(1, (function(){
+	var camera, scene, renderer, object;
+	var w  = 900, h = 520;
+	var running = false;
+	//初始化3D场景
+	function init() {
+		var container = document.getElementById( 'slide_welcome_container' );
+		camera = new THREE.Camera( 50, w/h, 1, 1000 );
+		camera.position.z = 800;
+		scene = new THREE.Scene();
+		var materials = [];
+		for ( var i = 0; i < 6; i ++ ) {
+			materials.push( [ new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff } ) ] );
+		}
+		object = new THREE.Mesh( new THREE.Cube(100, 100, 100,  1, 1, 1, materials),  new THREE.MeshFaceMaterial());
+		scene.addObject( object );
+
+		renderer = new THREE.CanvasRenderer();
+		renderer.setSize(w, h );
+		container.appendChild( renderer.domElement );
+	}
+	function animate() {
+		requestAnimationFrame( animate );
+		if(running){
+			render();
+		}
+	}
+	function render() {
+		object.rotation.y += 0.01;
+		object.rotation.x += 0.02;
+		renderer.render(scene, camera );
+	}
+	init();
+	animate();
+	return {
+		active: function(){
+			running = true;
+		},
+		deactive: function(){
+			running = false;
+		}
+	}
+})());
 //slide
 (function(){
 	var v1 = new Vector3d(-280, 0, 100),
@@ -84,9 +128,11 @@ window.onSlideChange = function(i){
 		addClickEvent(img2);
 		addClickEvent(img3);
 })();
-//slide 12
-App.register(12, (function(){
-	var canvas = new Raphael('slide_10_container', 800, 600);
+
+
+//slide 8
+App.register(8, (function(){
+	var canvas = new Raphael('slide_r_container', 800, 600);
 	var cubicR = 80;
 	var running = false;
 	var set = [new Vector3d(-cubicR, -cubicR, -cubicR),
@@ -99,10 +145,10 @@ App.register(12, (function(){
 				new Vector3d(-cubicR, cubicR, cubicR)];
 
 	var perFactor;
-	var slider = document.getElementById("slide_10_slider");
+	var slider = document.getElementById("slide_r_slider");
 	var onSliderChanged =function(){
 		perFactor = parseFloat(slider.value);
-		document.getElementById("slide_10_slider_span").innerHTML = perFactor;
+		document.getElementById("slide_r_slider_span").innerHTML = perFactor;
 	}
 	onSliderChanged();
 	slider.onchange = onSliderChanged;
@@ -167,32 +213,69 @@ App.register(12, (function(){
 		}
 	}
 })());
-//slide 13
-App.register(13, (function(){
-	var camera, scene, renderer, object;
+
+//slide11
+(function(){
+	var canvas = document.getElementById("canvas_skew");
+	var ctx = canvas.getContext('2d');
+	var image = new Image();
+	image.src="basic-3d/3d.jpg";
+	image.onload = function(){
+
+		 var sin = Math.sin(Math.PI/6);   
+		 var cos = Math.cos(Math.PI/6);   
+		 ctx.translate(200, 200);   
+		 var c = 0;  
+		 
+		 for (var i=0; i <= 12; i++) {   
+		   c = Math.floor(255 / 12 * i);   
+		   ctx.drawImage(image, 100, -200, 400, 400);
+		   ctx.transform(sin, sin, -sin, cos, 0, 0);   
+		 }   
+	}
+})();
+//slide 15
+App.register(15, (function(){
+	var camera, scene, renderer, cube, sphere ;
+	var pointLight, particle1
 	var w  = 800, h = 520;
+	var mouseX = 0;
+	var mouseY = 0;
+	var windowHalfX = window.innerWidth / 2;
+	var windowHalfY = window.innerHeight / 2;
 	var running = false;
 	//初始化3D场景
 	function init() {
-		var container = document.getElementById( 'slide_11_container' );
+		var container = document.getElementById( 'slide_3d_container' );
 		camera = new THREE.Camera( 50, w/h, 1, 1000 );
-		camera.position.z = 800;
+		camera.position.z = 680;
 		scene = new THREE.Scene();
 		var materials = [];
 		for ( var i = 0; i < 6; i ++ ) {
-			materials.push( [ new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff } ) ] );
+			materials.push( [ new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'basic-3d/3d.jpg' )} )] );
 		}
-		object = new THREE.Mesh( new THREE.Cube(200, 200, 200,  1, 1, 1, materials),  new THREE.MeshFaceMaterial());
-		scene.addObject( object );
+		cube = new THREE.Mesh( new THREE.Cube(120, 120, 120,  4, 4, 4, materials),  new THREE.MeshFaceMaterial());
+		cube.position.y = 200;
+		sphere = new THREE.Mesh( new THREE.Sphere  (160, 20, 20), new THREE.MeshLambertMaterial( { color: 0xa11111, shading: THREE.FlatShading } ));
+		sphere.position.y = -100;
+		scene.addObject( cube );
+		scene.addObject( sphere );
 
-		var pointLight = new THREE.PointLight( 0xffffff, 1 );
-		pointLight.position.x = 300;
+		particle1 = new THREE.Mesh( new THREE.Sphere  (10, 20, 20),  new THREE.MeshBasicMaterial( { color: 0xffffff }));
+		particle1.scale.x = particle1.scale.y = particle1.scale.z =0.5;
+		scene.addObject( particle1 );
+
+
+		pointLight = new THREE.PointLight( 0xffffff, 1 );
+		pointLight.position.x = 200;
 		pointLight.position.y = 200;
 		scene.addLight( pointLight );
+		
 
 		renderer = new THREE.CanvasRenderer();
 		renderer.setSize(w, h );
 		container.appendChild( renderer.domElement );
+		document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 	}
 	function animate() {
 		requestAnimationFrame( animate );
@@ -200,10 +283,28 @@ App.register(13, (function(){
 			render();
 		}
 	}
+	function onDocumentMouseMove(event) {
+ 
+		mouseX = ( event.clientX - windowHalfX ) *0.5;
+		mouseY = ( event.clientY - windowHalfY ) *2 ;
+
+	}
 	function render() {
-		object.rotation.y += 0.01;
-		object.rotation.x += 0.02;
+		cube.rotation.y += 0.01;
+		cube.rotation.x += 0.02;
+		sphere.rotation.y += 0.01;
 		renderer.render(scene, camera );
+		var time = new Date().getTime() * 0.0005;
+
+		particle1.position.x = Math.sin( time * 3) * 200;
+		particle1.position.z = Math.cos( time * 3) *200;
+
+		pointLight.position.x = particle1.position.x;
+		pointLight.position.z = particle1.position.z;
+		camera.rotation.z ++;
+
+		camera.position.x += ( mouseX - camera.position.x ) * 0.05;
+		camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
 	}
 	init();
 	animate();
@@ -216,8 +317,8 @@ App.register(13, (function(){
 		}
 	}
 })());
-
-App.register(14, (function(){
+//slide 16
+App.register(16, (function(){
 			var container, stats;
  
 			var camera, scene, renderer;
@@ -234,7 +335,7 @@ App.register(14, (function(){
  
 			function init() {
  
-				container = document.getElementById( 'slide_12_container' );
+				container = document.getElementById( 'slide_mesh_container' );
  
 				camera = new THREE.Camera( 60, w/h, 1, 10000 );
 				camera.position.z = 300;
@@ -339,8 +440,8 @@ App.register(14, (function(){
 			}
 		}
  })());	 
-
-App.register(15,  (function(){
+//slide 17
+App.register(17,  (function(){
 			var container, stats;
  
 			var camera, scene, renderer;
@@ -357,7 +458,7 @@ App.register(15,  (function(){
  
 			function init() {
  
-				container = document.getElementById( 'slide_13_container' );
+				container = document.getElementById( 'slide_mesh2_container' );
  
 				camera = new THREE.Camera( 60, w/h, 1, 10000 );
 				camera.position.z = 300;
