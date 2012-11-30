@@ -1,0 +1,453 @@
+<!DOCTYPE html> 
+<!--
+  Copyright 2011 Google Inc.
+ 
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+ 
+     http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ 
+  Original slides: Marcin Wichary (mwichary@google.com)
+  Modifications: Chrome DevRel Team (chrome-devrel@googlegroups.com)
+                 Alex Russell (slightlyoff@chromium.org)
+                 Brad Neuberg
+--> 
+<html> 
+<head> 
+    <meta charset='utf-8'> 
+    <meta http-equiv="X-UA-Compatible" content="chrome=1"> 
+    <title>JPE - JavaScript Physics Engine</title> 
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+	<link href="lib/main.css" class="theme" rel="stylesheet" /> 
+	<style>
+	html .slide .counter{
+		font-size:18px;
+		text-align:center;
+		line-height:28px;
+		display:inline-block;
+		width:28px;
+		height:28px;
+		background:#fff;
+		border-radius:16px;
+	}
+	</style>
+  </head>
+  <body class="three-d">
+    <div class="presentation">
+	  <!--slides start -->
+      <div class="slides"> 
+        <div class="slide" id="landing-slide" style="postion:relative;">
+			<div id="slide_welcome_container" style="position:absolute;top:-100px;"></div>
+			<section class="middle">
+				<p style='font-size:64px;margin-bottom:0;'>JPE - JavaScript Physics Engine</p>
+				<p style='font-size:24px;padding-left:420px;'>阿里云 F2E 正邪</p>
+			</section>
+		</div>
+		<div class="slide"  style="background:url(basic-3d/inception.jpg)">
+          <header><h1 style="color:#ff0000;font-weight:bold;">3D<span style='color:#a11111;font-weight:normal;'>imension</span></h1></header>
+          <section class="middle">
+          </section>
+		 <span class="counter">1</span>
+	   </div>
+	   <div class="slide" style="background:#fff">
+          <header><h1>一点透视</h1></header>
+          <section class="middle">
+			<div class="pers-1"></div>
+          </section>
+		  <style>
+			div.pers-1{
+				width:433px;
+				height:326px;
+				display:inline-block;
+				background:url(basic-3d/cuboid_1b.jpg);
+			}
+			div.pers-1:hover{
+				background:url(basic-3d/cuboid_1a.gif);
+			}
+			</style>
+		  <span class="counter">2</span>
+	   </div>
+	   <div class="slide" style="background:#fff">
+          <header><h1>两点透视</h1></header>
+          <section class="middle">
+			<div class="pers-2"></div>
+          </section>
+		  <style>
+			div.pers-2{
+				width:433px;
+				height:326px;
+				display:inline-block;
+				background:url(basic-3d/cuboid_2b.jpg);
+			}
+			div.pers-2:hover{
+				background:url(basic-3d/cuboid_2a.gif);
+			}
+			</style>
+		  <span class="counter">3</span>
+	   </div>
+	   <div class="slide" style="background:#fff">
+          <header><h1>三点透视</h1></header>
+          <section class="middle">
+			<div class="pers-3"></div>
+          </section>
+		  <style>
+			div.pers-3{
+				width:433px;
+				height:326px;
+				display:inline-block;
+				background:url(basic-3d/cuboid_3b.jpg);
+			}
+			div.pers-3:hover{
+				background:url(basic-3d/cuboid_3a.gif);
+			}
+			</style>
+		  <span class="counter">4</span>
+	   </div>
+	   <div class="slide" style="background:#fff">
+          <header><h1>人眼的感知</h1></header>
+          <section class="middle">
+			<img style="position:relative;top:50px;" src="basic-3d/viewport.jpg"/>
+          </section>
+		  <span class="counter">5</span>
+	   </div>
+	   <div class="slide">
+          <header><h1>3D到2D的转换</h1></header>
+          <section class="middle">
+			<img src="basic-3d/3d-2d.png" width="600" height="400"/>
+			<div style="font-size:32px;text-align:left;line-height:38px;padding-left:100px;">
+				<span style="color:#a11111;">perspective = viewDistance / (z + viewDistance);</span><br/>
+				<span>x = x * perspective;</span><br/>
+				<span>y = y * perspctive;</span><br/>
+				<span>z = 0;</span>
+			</div>
+          </section>
+		  <span class="counter">6</span>
+	   </div>
+		<div class="slide">
+          <header><h1>透视</h1></header>
+          <section>
+			<div id="slide_r_container"></div>
+			<div style="position:relative;left:600px;top:-200px;">
+				<input style="width:200px" type="range" id="slide_r_slider" value="300" min="100" max="600">
+				<p>透视因子：<span id="slide_r_slider_span">300</span></p>
+			</div>
+          </section>
+		  <span class="counter">7</span>
+	   </div>
+	   <div class="slide">
+          <header><h1>3个img标签组成的一个小例子</h1></header>
+         <section>
+			<div style="position:relative;height:600px;left:400px;top:200px;">
+				<img id="slide5_img1" class="slide5_img" src="basic-3d/3d.jpg"></img>
+				<img id="slide5_img2" class="slide5_img" src="basic-3d/3d.jpg">
+				<img id="slide5_img3" class="slide5_img" src="basic-3d/3d.jpg">
+				<style>
+				.slide5_img{
+					position:absolute;width:200px;heigt:150px;
+					-webkit-box-reflect:below 4px -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0.78, rgba(0, 0, 0, 0)), color-stop(0.68, rgba(0, 0, 0, 0)), to(rgb(255, 255, 255)), to(rgb(255, 255, 255))) 0 0 0 0 stretch stretch;
+				}
+				</style>
+			</div>
+          </section>
+		  <span class="counter">8</span>
+	   </div>
+	   <div class="slide" style="background:#fff">
+          <header><h1>3D场景</h1></header>
+          <section class="middle">
+			<img src="basic-3d/scene.jpg"/>
+          </section>
+		  <span class="counter">9</span>
+	   </div>
+	   <div class="slide">
+          <header><h1>材质</h1></header>
+          <section>
+			<p>context.drawImage(image, x, y, width, height);</p>
+			<p>context.transform(m11, m12, m21, m22, dx, dy);</p>
+			<canvas id="canvas_skew" width="800" height="400"></canvas>
+          </section>
+		  <span class="counter">10</span>
+	   </div>
+	   <div class="slide">
+          <header><h1>灯光</h1></header>
+          <section>
+			<dl>
+				<dt>点光源</dt>
+				<dd>电灯泡 THREE.PointLight</dd>
+				<dt>平行光</dt>
+				<dd>太阳光 THREE.DirectionalLight</dd>
+				<dt>聚光灯</dt>
+				<dd>手电筒 THREE.SpotLight</dd>
+				<dt>环境光</dt>
+				<dd>自然光 THREE.AmbientLight</dd>
+			</ol>
+			<style>
+			dd{
+				font-size:30px;
+				margin:8px 0 20px 60px;
+			}
+			</style>
+          </section>
+		  <span class="counter">11</span>
+	   </div>
+	   <div class="slide" style="background:url(basic-3d/shade.jpg)">
+			<header><h1></h1></header>
+			<section>
+			</section>
+			<span class="counter">12</span>
+	   </div>
+	   <div class="slide">
+			<header><h1>消隐</h1></header>
+			<section>
+				<dl style='line-height:80px'>
+					<dt>背面剔除</dt>
+					<dd></dd>
+					<dt>视域消隐</dt>
+					<dd></dd>
+					<dt>遮挡剔除</dt>
+					<dd></dd>
+				</dl>
+				<div style='position:relative;left:300px;top:-300px;'>
+					<img src="basic-3d/view-frustum.jpg"/>
+				</div>
+			</section>
+			<span class="counter">13</span>
+	   </div>
+	    <div class="slide" style="background:#112233">
+          <header><h1 style="color:#fff">一个例子</h1></header>
+          <section>
+			<div id="slide_3d_container"></div>
+          </section>
+		  <span class="counter">14</span>
+	   </div>
+	   <div class="slide">
+          <header><h1>扭曲特效</h1></header>
+          <section>
+			<div id="slide_mesh_container"></div>
+          </section>
+		  <span class="counter">15</span>
+	   </div>
+	    <div class="slide">
+          <header><h1>扭曲特效</h1></header>
+          <section>
+			<div id="slide_mesh2_container"></div>
+          </section>
+		  <span class="counter">16</span>
+	   </div>
+	   <div class="slide">
+          <header><h1>Q&A</h1></header>
+          <section class="middle">
+			<p style='font-size:60px;'>Thank You!</p>
+			<div style="text-align:left;font-size:28px;margin-left:200px;">
+			<div><span class="gmail">Gmail：</span><a href="mailto:colorhook@gmail.com">colorhook@gmail.com</a></div>
+			<div><span class="sina">新浪微博：</span><a href="http://weibo.com/colorhook">@正邪邪邪</a></div>
+			</div>
+          </section>
+		  <span class="counter">17</span>
+	   </div>
+	 </div>
+	 <!--slides end -->
+<script>
+  (function() {
+        // Since we don't have the fallback of attachEvent and
+        // other IE only stuff we won't try to run JS for IE.
+        // It will run though when using Google Chrome Frame
+        if (document.all) { return; }
+
+        var currentSlideNo;
+        var notesOn = false;
+        var slides = document.getElementsByClassName('slide');
+        var touchStartX = 0;     
+   
+        // var slide_hash = window.location.hash.replace(/#/, '');
+        // if (slide_hash) {
+        //   for (var i = 0, len = slides.length; i < len; i++) {
+        //     if (slides[i].id == slide_hash) {
+        //       currentSlideNo = i;
+        //       updateSlideClasses(); 
+        //     }
+        //   }
+        // }
+        
+        var spaces = /\s+/, a1 = [""];
+
+        var str2array = function(s) {
+          if (typeof s == "string" || s instanceof String) {
+            if (s.indexOf(" ") < 0) {
+              a1[0] = s;
+              return a1;
+            } else {
+              return s.split(spaces);
+            }
+          }
+          return s;
+        };
+
+        var trim = function(str) {
+          return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+        };
+
+        var addClass = function(node, classStr) {
+          classStr = str2array(classStr);
+          var cls = " " + node.className + " ";
+          for (var i = 0, len = classStr.length, c; i < len; ++i) {
+            c = classStr[i];
+            if (c && cls.indexOf(" " + c + " ") < 0) {
+              cls += c + " ";
+            }
+          }
+          node.className = trim(cls);
+        };
+
+        var removeClass = function(node, classStr) {
+          var cls;
+          if (classStr !== undefined) {
+            classStr = str2array(classStr);
+            cls = " " + node.className + " ";
+            for (var i = 0, len = classStr.length; i < len; ++i) {
+              cls = cls.replace(" " + classStr[i] + " ", " ");
+            }
+            cls = trim(cls);
+          } else {
+            cls = "";
+          }
+          if (node.className != cls) {
+            node.className = cls;
+          }
+        };
+
+        var getSlideEl = function(slideNo) {
+          if (slideNo > 0) {
+            return slides[slideNo - 1];
+          } else {
+            return null;
+          }
+        };
+
+        var getSlideTitle = function(slideNo) {
+          var el = getSlideEl(slideNo);
+          
+          if (el) {
+            return el.getElementsByTagName('header')[0].innerHTML;
+          } else {
+            return null;
+          }
+        };
+        
+        var changeSlideElClass = function(slideNo, className) {
+          var el = getSlideEl(slideNo);
+
+          if (el) {
+            removeClass(el, 'far-past past current future far-future');
+            addClass(el, className);
+          }
+        };
+        
+        var updateSlideClasses = function() {
+          window.location.hash = "slide" + currentSlideNo;
+          changeSlideElClass(currentSlideNo - 2, 'far-past');
+          changeSlideElClass(currentSlideNo - 1, 'past');
+          changeSlideElClass(currentSlideNo, 'current');
+          changeSlideElClass(currentSlideNo + 1, 'future');
+          changeSlideElClass(currentSlideNo + 2, 'far-future');          
+		  window.onSlideChange && window.onSlideChange(currentSlideNo);
+        };
+        
+        var nextSlide = function() {
+          if (currentSlideNo < slides.length) {
+            currentSlideNo++;
+          }
+          
+          updateSlideClasses();
+        };
+        
+        var prevSlide = function() {
+          if (currentSlideNo > 1) {
+            currentSlideNo--;
+          }
+          updateSlideClasses();
+        };
+        
+        var showNotes = function() {
+          var notes = document.querySelectorAll('.notes');
+          for (var i = 0, len = notes.length; i < len; i++) {
+            notes[i].style.display = (notesOn) ? 'none':'block';
+          }
+          notesOn = (notesOn) ? false:true;
+        };
+
+        var switch3D = function() {
+          if (document.body.className.indexOf('three-d') == -1) {
+            document.getElementsByClassName('presentation')[0].style.webkitPerspective = '1000px';
+            document.body.className += ' three-d';
+          } else {
+            window.setTimeout("document.getElementsByClassName('presentation')[0].style.webkitPerspective = '0';", 2000);
+            document.body.className = document.body.className.replace(/three-d/, '');
+          }
+        };
+
+        var handleBodyKeyDown = function(event) {
+          // console.log(event.keyCode);
+          switch (event.keyCode) {
+            case 37: // left arrow
+              prevSlide();
+              break;
+            case 39: // right arrow
+            // case 32: // space
+              nextSlide();
+              break;
+            case 50: // 2
+              showNotes();          
+              break;
+            case 51: // 3
+              switch3D();          
+              break;
+          }
+        };
+
+        var addTouchListeners = function() {
+          document.addEventListener('touchstart', function(e) {
+            touchStartX = e.touches[0].pageX;
+          }, false);
+          document.addEventListener('touchend', function(e) {
+            var pixelsMoved = touchStartX - e.changedTouches[0].pageX;
+            var SWIPE_SIZE = 150;
+            if (pixelsMoved > SWIPE_SIZE) {
+              nextSlide();
+            }
+            else if (pixelsMoved < -SWIPE_SIZE) {
+             prevSlide();
+            }
+          }, false);
+        };
+
+        // initialize
+
+        (function() {
+          if (window.location.hash != "") {
+            currentSlideNo = Number(window.location.hash.replace('#slide', ''));
+          } else {
+            currentSlideNo = 1;
+          }
+   
+          document.addEventListener('keydown', handleBodyKeyDown, false);
+   
+          var els = slides;
+          for (var i = 0, el; el = els[i]; i++) {
+            addClass(el, 'slide far-future');
+          }
+          updateSlideClasses(); 
+
+          // add support for finger events (filter it by property detection?)
+          addTouchListeners();
+        })();
+      })();
+</script>
+</body>
+</html>

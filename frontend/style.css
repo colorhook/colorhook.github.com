@@ -1,0 +1,35 @@
+section{
+	text-shadow: 0px 2px 0 white;
+}
+.center{
+	display: -webkit-box;
+	width:100%;
+	-webkit-box-align: center;
+	-webkit-box-pack: center;
+}
+.f2e-is-what{
+	width: 610px;
+	height: 458px;
+	margin-left: auto;
+	margin-right: auto;
+	background: url(f2e-is-what.jpg) no-repeat;
+	box-shadow: 0 0 10px rgba(0, 0, 0, .5)
+}
+section div.f2e-is-what{
+	border: #fff 16px solid;
+}
+.p-2{background-position: 0 -458px;}
+.p-3{background-position: 0 -916px;}
+.p-4{background-position: 0 -1374px;}
+.p-5{background-position: 0 -1832px;}
+.p-6{background-position: 0 -2290px;}
+.p-7{background-position: 0 -2748px;}
+.p-8{background-position: 0 -3206px;}
+.p-9{background-position: 0 -3664px;}
+.p-10{background-position: 0 -4122px;}
+.p-11{background-position: 0 -4580px;}
+.p-12{background-position: 0 -5038px;}
+.p-13{background-position: 0 -5496px;}
+.p-14{background-position: 0 -5954px;}
+.p-15{background-position: 0 -6412px;}
+.p-16{background-position: 0 -6870px;}
